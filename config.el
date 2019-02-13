@@ -22,7 +22,7 @@
  prettier-js-args '("--no-semi" "--single-quote")
  )
 
-(load-theme 'doom-city-lights t)
+(load-theme 'doom-dracula t)
 
 (doom-themes-visual-bell-config)
 (doom-themes-neotree-config)
