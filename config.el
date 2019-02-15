@@ -12,8 +12,6 @@
  doom-font (font-spec :family "Iosevka" :size 16)
  doom-big-font (font-spec :family "Iosevka" :size 20)
  doom-themes-enable-italic t
- company-idle-delay 0.1
- company-minimum-prefix-length 2
  key-chord-two-keys-delay 0.2
  web-mode-markup-indent-offset 2
  web-mode-code-indent-offset 2
@@ -21,6 +19,22 @@
  css-indent-offset 2
  prettier-js-args '("--no-semi" "--single-quote")
  )
+
+(after! company
+  (setq company-idle-delay 0.2
+        company-echo-delay 0.0
+        company-minimum-prefix-length 2
+        company-tooltip-flip-when-above t
+        company-dabbrev-downcase nil))
+
+(after! tide
+  (setq tide-completion-detailed t
+        tide-always-show-documentation t)
+  )
+
+(add-hook 'js2-mode-hook 'ac-js2-mode)
+(add-to-list 'company-backends 'ac-js2-company)
+(setq ac-js2-evaluate-calls t)
 
 (load-theme 'doom-dracula t)
 
