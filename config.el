@@ -5,8 +5,11 @@
 ;;
 (global-auto-revert-mode t)
 
-;; js config
+(key-chord-mode 1)
 
+(require 'company)
+
+(load-theme 'doom-dracula t)
 
 (setq
  doom-font (font-spec :family "Iosevka" :size 16)
@@ -18,42 +21,78 @@
  js-indent-level 2
  css-indent-offset 2
  prettier-js-args '("--no-semi" "--single-quote")
- )
-
-(after! company
-  (setq company-idle-delay 0.2
-        company-echo-delay 0.0
-        company-minimum-prefix-length 2
-        company-tooltip-flip-when-above t
-        company-dabbrev-downcase nil))
-
-(after! tide
-  (setq tide-completion-detailed t
-        tide-always-show-documentation t)
-  )
-
-(add-hook 'js2-mode-hook 'ac-js2-mode)
-(add-to-list 'company-backends 'ac-js2-company)
-(setq ac-js2-evaluate-calls t)
-
-(load-theme 'doom-dracula t)
+ company-idle-delay 0.2
+ company-echo-delay 0.0
+ company-minimum-prefix-length 2
+ company-tooltip-flip-when-above t
+ company-dabbrev-downcase nil)
 
 (doom-themes-visual-bell-config)
 (doom-themes-neotree-config)
 
-;; double key press for exiting insert mode
-(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-(key-chord-mode 1)
-
-;; clojure config
-(key-chord-define-global ",," 'cider-eval-sexp-at-point)
-(key-chord-define-global ".." 'cider-eval-last-sexp)
+;; javascript
+(after! tide
+  (setq tide-completion-detailed t
+        tide-always-show-documentation t))
 
 (add-hook!
   js2-mode 'prettier-js-mode
   (add-hook 'before-save-hook #'refmt-before-save nil t))
 
-(map! :ne "M-/" #'comment-or-uncomment-region)
+
+;; double key press for exiting insert mode
+
+;; clojure config
+
+(after! clojure-mode
+  (key-chord-define-global ",," 'cider-eval-sexp-at-point)
+  (key-chord-define-global "--" 'cider-eval-last-sexp)
+  (define-clojure-indent
+    (PUT 2)
+    (POST 2)
+    (GET 2)
+    (PATCH 2)
+    (DELETE 2)
+    (context 2)
+    (checking 3)
+    (context 2)
+    (defroutes 'defun)
+    (render 'defun)
+    (componentDidMount 'defun)
+    (componentWillMount 'defun)
+    (query 'defun)
+    (params 'defun))
+  (setq cider-cljs-lein-repl
+        "(do (require 'figwheel-sidecar.repl-api)
+         (figwheel-sidecar.repl-api/start-figwheel!)
+         (figwheel-sidecar.repl-api/cljs-repl))")
+  (setq cljr-magic-require-namespaces
+        '(("io" . "clojure.java.io")
+          ("sh" . "clojure.java.shell")
+          ("jdbc" . "clojure.java.jdbc")
+          ("set" . "clojure.set")
+          ("time" . "java-time")
+          ("str" . "cuerdas.core")
+          ("path" . "pathetic.core")
+          ("walk" . "clojure.walk")
+          ("zip" . "clojure.zip")
+          ("async" . "clojure.core.async")
+          ("component" . "com.stuartsierra.component")
+          ("http" . "clj-http.client")
+          ("url" . "cemerick.url" )
+          ("sql" . "honeysql.core")
+          ("csv" . "clojure.data.csv")
+          ("json" . "cheshire.core")
+          ("s" . "clojure.spec.alpha")
+          ("fs" . "me.raynes.fs")
+          ("ig" . "integrant.core")
+          ("cp" . "com.climate.claypoole"))))
+
+
+;; global shortcuts
+(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
+(key-chord-define-global "##" 'comment-line)
+(key-chord-define-global "#+" 'comment-or-uncomment-region)
 
 (global-set-key (kbd "M-ö") (kbd "{"))
 (global-set-key (kbd "C-ö") (kbd "["))
@@ -61,3 +100,44 @@
 (global-set-key (kbd "M-ä") (kbd "}"))
 (global-set-key (kbd "C-ä") (kbd "]"))
 (global-set-key (kbd "s-ä") (kbd ")"))
+(global-set-key (kbd "s-y") 'sp-copy-sexp)
+(global-set-key (kbd "s-x") 'sp-kill-sexp)
+(global-set-key (kbd "s-c") 'sp-kill-symbol)
+
+ ;; Coloring
+(defun live-fontify-hex-colors (limit)
+  (remove-overlays (point) limit 'fontify-hex-colors t)
+  (while (re-search-forward "\\(#[[:xdigit:]]\\{6\\}\\)" limit t)
+    (let ((ov (make-overlay (match-beginning 0)
+                            (match-end 0))))
+      (overlay-put ov 'face  (list :background (match-string 1) :foreground "black"))
+      (overlay-put ov 'fontify-hex-colors t)
+      (overlay-put ov 'evaporate t)))
+  ;; return nil telling font-lock not to fontify anything from this
+  ;; function
+  nil)
+
+(defun live-fontify-hex-colours-in-current-buffer ()
+  (interactive)
+  (font-lock-add-keywords nil
+                          '((live-fontify-hex-colors))))
+
+(provide 'live-fontify-hex)
+
+(add-hook 'css-mode-hook
+          #'live-fontify-hex-colours-in-current-buffer)
+
+(add-hook 'scss-mode-hook
+          #'live-fontify-hex-colours-in-current-buffer)
+
+(add-hook 'scss-mode-hook
+          #'live-fontify-hex-colours-in-current-buffer)
+
+(add-hook 'js2-mode-hook
+          #'live-fontify-hex-colours-in-current-buffer)
+
+(add-hook 'cider-mode-hook
+          #'live-fontify-hex-colours-in-current-buffer)
+
+(add-hook 'web-mode-hook
+          #'live-fontify-hex-colours-in-current-buffer)
