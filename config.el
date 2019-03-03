@@ -62,31 +62,24 @@
     (componentWillMount 'defun)
     (query 'defun)
     (params 'defun))
-  (setq cider-cljs-lein-repl
-        "(do (require 'figwheel-sidecar.repl-api)
-         (figwheel-sidecar.repl-api/start-figwheel!)
-         (figwheel-sidecar.repl-api/cljs-repl))")
+  ;; (setq cider-cljs-lein-repl
+  ;;       "(do (require 'figwheel-sidecar.repl-api)
+  ;;        (figwheel-sidecar.repl-api/start-figwheel!)
+  ;;        (figwheel-sidecar.repl-api/cljs-repl))")
   (setq cljr-magic-require-namespaces
         '(("io" . "clojure.java.io")
           ("sh" . "clojure.java.shell")
           ("jdbc" . "clojure.java.jdbc")
           ("set" . "clojure.set")
           ("time" . "java-time")
-          ("str" . "cuerdas.core")
-          ("path" . "pathetic.core")
           ("walk" . "clojure.walk")
           ("zip" . "clojure.zip")
           ("async" . "clojure.core.async")
           ("component" . "com.stuartsierra.component")
-          ("http" . "clj-http.client")
           ("url" . "cemerick.url" )
-          ("sql" . "honeysql.core")
           ("csv" . "clojure.data.csv")
           ("json" . "cheshire.core")
-          ("s" . "clojure.spec.alpha")
-          ("fs" . "me.raynes.fs")
-          ("ig" . "integrant.core")
-          ("cp" . "com.climate.claypoole"))))
+          ("s" . "clojure.spec.alpha"))))
 
 
 ;; global shortcuts
