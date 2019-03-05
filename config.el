@@ -12,8 +12,8 @@
 (load-theme 'doom-dracula t)
 
 (setq
- doom-font (font-spec :family "Iosevka" :size 16)
- doom-big-font (font-spec :family "Iosevka" :size 20)
+ doom-font (font-spec :family "Mononoki" :size 16)
+ doom-big-font (font-spec :family "Mononoki" :size 20)
  doom-themes-enable-italic t
  key-chord-two-keys-delay 0.2
  web-mode-markup-indent-offset 2
@@ -45,7 +45,7 @@
 ;; clojure config
 
 (after! clojure-mode
-  (key-chord-define-global ",," 'cider-eval-sexp-at-point)
+  (key-chord-define-global ",," 'cider-eval-defun-at-point)
   (key-chord-define-global "--" 'cider-eval-last-sexp)
   (define-clojure-indent
     (PUT 2)
@@ -134,3 +134,5 @@
 
 (add-hook 'web-mode-hook
           #'live-fontify-hex-colours-in-current-buffer)
+
+(add-hook 'js2-mode-hook 'rainbow-delimiters-mode-disable)
