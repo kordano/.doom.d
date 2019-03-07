@@ -45,8 +45,9 @@
 ;; clojure config
 
 (after! clojure-mode
-  (key-chord-define-global ",," 'cider-eval-defun-at-point)
-  (key-chord-define-global "--" 'cider-eval-last-sexp)
+  (key-chord-define-local ",," 'cider-eval-defun-at-point)
+  (key-chord-define-local "--" 'cider-eval-last-sexp)
+  (key-chord-define-local "nn" 'cider-find-var)
   (define-clojure-indent
     (PUT 2)
     (POST 2)
@@ -79,8 +80,8 @@
           ("url" . "cemerick.url" )
           ("csv" . "clojure.data.csv")
           ("json" . "cheshire.core")
-          ("s" . "clojure.spec.alpha"))))
-
+          ("s" . "clojure.spec.alpha")))
+  (visual-line-mode 1))
 
 ;; global shortcuts
 (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
