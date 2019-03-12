@@ -45,9 +45,9 @@
 ;; clojure config
 
 (after! clojure-mode
-  (key-chord-define-local ",," 'cider-eval-defun-at-point)
-  (key-chord-define-local "--" 'cider-eval-last-sexp)
-  (key-chord-define-local "nn" 'cider-find-var)
+  (key-chord-define-global ",," 'cider-eval-defun-at-point)
+  (key-chord-define-global "--" 'cider-eval-last-sexp)
+  (key-chord-define-global "ü+" 'cider-find-var)
   (define-clojure-indent
     (PUT 2)
     (POST 2)
@@ -137,3 +137,10 @@
           #'live-fontify-hex-colours-in-current-buffer)
 
 (add-hook 'js2-mode-hook 'rainbow-delimiters-mode-disable)
+
+;; zoombie keys
+(define-key key-translation-map [dead-grave] "`")
+(define-key key-translation-map [dead-acute] "'")
+(define-key key-translation-map [dead-circumflex] "^")
+(define-key key-translation-map [dead-diaeresis] "\"")
+(define-key key-translation-map [dead-tilde] "~")
