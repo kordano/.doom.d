@@ -45,9 +45,6 @@
 ;; clojure config
 
 (after! clojure-mode
-  (key-chord-define-global ",," 'cider-eval-defun-at-point)
-  (key-chord-define-global "--" 'cider-eval-last-sexp)
-  (key-chord-define-global "ü+" 'cider-find-var)
   (define-clojure-indent
     (PUT 2)
     (POST 2)
@@ -83,6 +80,13 @@
           ("s" . "clojure.spec.alpha")))
   (visual-line-mode 1))
 
+(add-hook 'clojure-mode-hook
+          (lambda ()
+            (key-chord-define clojure-mode-map ",," 'cider-eval-defun-at-point)
+            (key-chord-define clojure-mode-map "--" 'cider-eval-last-sexp)
+            (key-chord-define clojure-mode-map "+ü" 'cider-find-var)
+            (key-chord-define clojure-mode-map "#ü" 'cider-eval-buffer)))
+
 ;; global shortcuts
 (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
 (key-chord-define-global "##" 'comment-line)
@@ -97,6 +101,8 @@
 (global-set-key (kbd "s-y") 'sp-copy-sexp)
 (global-set-key (kbd "s-x") 'sp-kill-sexp)
 (global-set-key (kbd "s-c") 'sp-kill-symbol)
+(global-set-key (kbd "C-<right>") 'sp-forward-slurp-sexp)
+(global-set-key (kbd "C-<left>") 'sp-forward-barf-sexp)
 
  ;; Coloring
 (defun live-fontify-hex-colors (limit)
