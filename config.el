@@ -9,9 +9,9 @@
 
 (require 'company)
 
-(load-theme 'doom-dracula t)
-
 (setq
+ ;; doom-font (font-spec :family "Iosevka" :size 16)
+ ;; doom-big-font (font-spec :family "Iosevka" :size 20)
  doom-font (font-spec :family "Mononoki" :size 16)
  doom-big-font (font-spec :family "Mononoki" :size 20)
  doom-themes-enable-italic t
@@ -85,12 +85,18 @@
             (key-chord-define clojure-mode-map ",," 'cider-eval-defun-at-point)
             (key-chord-define clojure-mode-map "--" 'cider-eval-last-sexp)
             (key-chord-define clojure-mode-map "+ü" 'cider-find-var)
-            (key-chord-define clojure-mode-map "#ü" 'cider-eval-buffer)))
+            (key-chord-define clojure-mode-map "#ü" 'cider-eval-buffer)
+            (key-chord-define clojure-mode-map "#ä" 'cider-format-defun)
+            (key-chord-define clojure-mode-map "#t" 'cider-test-run-test)
+            (paren-face-mode)
+            ))
+
 
 ;; global shortcuts
 (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
 (key-chord-define-global "##" 'comment-line)
 (key-chord-define-global "#+" 'comment-or-uncomment-region)
+(key-chord-define-global "öö" 'evilmi-jump-items)
 
 (global-set-key (kbd "M-ö") (kbd "{"))
 (global-set-key (kbd "C-ö") (kbd "["))
@@ -103,6 +109,8 @@
 (global-set-key (kbd "s-c") 'sp-kill-symbol)
 (global-set-key (kbd "C-<right>") 'sp-forward-slurp-sexp)
 (global-set-key (kbd "C-<left>") 'sp-forward-barf-sexp)
+(global-set-key (kbd "M-s") 'sp-splice-sexp-killing-backward)
+(global-set-key (kbd "<f5>") 'helm-projectile-grep)
 
  ;; Coloring
 (defun live-fontify-hex-colors (limit)
