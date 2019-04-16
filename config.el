@@ -10,10 +10,12 @@
 (require 'company)
 
 (setq
- ;; doom-font (font-spec :family "Iosevka" :size 16)
- ;; doom-big-font (font-spec :family "Iosevka" :size 20)
  doom-font (font-spec :family "Mononoki" :size 16)
  doom-big-font (font-spec :family "Mononoki" :size 20)
+ doom-font (font-spec :family "Fira Code" :size 13)
+ doom-big-font (font-spec :family "Fira Code" :size 15)
+ ;; doom-font (font-spec :family "Mononoki" :size 16)
+ ;; doom-big-font (font-spec :family "Mononoki" :size 20)
  doom-themes-enable-italic t
  key-chord-two-keys-delay 0.2
  web-mode-markup-indent-offset 2
