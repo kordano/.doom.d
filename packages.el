@@ -14,5 +14,4 @@
 (package! org)
 (package! prettier-js)
 ;; (package! ac-js2)
-
 (package! paren-face)

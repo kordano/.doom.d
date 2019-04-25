@@ -10,10 +10,11 @@
 (require 'company)
 
 (setq
- ;; doom-font (font-spec :family "Iosevka" :size 16)
- ;; doom-big-font (font-spec :family "Iosevka" :size 20)
- doom-font (font-spec :family "Mononoki" :size 16)
- doom-big-font (font-spec :family "Mononoki" :size 20)
+ doom-font (font-spec :family "Iosevka" :size 15)
+ doom-big-font (font-spec :family "Iosevka" :size 18)
+ ;; doom-font (font-spec :family "Mononoki" :size 16)
+ ;; doom-big-font (font-spec :family "Mononoki" :size 20)
+ doom-theme 'doom-dracula
  doom-themes-enable-italic t
  key-chord-two-keys-delay 0.2
  web-mode-markup-indent-offset 2
@@ -80,16 +81,20 @@
           ("s" . "clojure.spec.alpha")))
   (visual-line-mode 1))
 
-(add-hook 'clojure-mode-hook
-          (lambda ()
-            (key-chord-define clojure-mode-map ",," 'cider-eval-defun-at-point)
+(defun clj-modes-hooks ()
+  (key-chord-define clojure-mode-map ",," 'cider-eval-defun-at-point)
             (key-chord-define clojure-mode-map "--" 'cider-eval-last-sexp)
             (key-chord-define clojure-mode-map "+ü" 'cider-find-var)
             (key-chord-define clojure-mode-map "#ü" 'cider-eval-buffer)
             (key-chord-define clojure-mode-map "#ä" 'cider-format-defun)
             (key-chord-define clojure-mode-map "#t" 'cider-test-run-test)
-            (paren-face-mode)
-            ))
+            (key-chord-define clojure-mode-map "üü" 'cider-pprint-eval-last-sexp)
+            (rainbow-delimiters-mode 0)
+            (paren-face-mode))
+
+(add-hook 'clojure-mode-hook 'clj-modes-hooks)
+(add-hook 'clojurec-mode-hook 'clj-modes-hooks)
+(add-hook 'clojurescript-mode-hook 'clj-modes-hooks)
 
 
 ;; global shortcuts
@@ -158,3 +163,4 @@
 (define-key key-translation-map [dead-circumflex] "^")
 (define-key key-translation-map [dead-diaeresis] "\"")
 (define-key key-translation-map [dead-tilde] "~")
+
