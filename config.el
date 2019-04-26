@@ -102,6 +102,7 @@
 (key-chord-define-global "##" 'comment-line)
 (key-chord-define-global "#+" 'comment-or-uncomment-region)
 (key-chord-define-global "öö" 'evilmi-jump-items)
+(key-chord-define-global "qw" 'other-frame)
 
 (global-set-key (kbd "M-ö") (kbd "{"))
 (global-set-key (kbd "C-ö") (kbd "["))
