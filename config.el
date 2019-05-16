@@ -10,8 +10,8 @@
 (require 'company)
 
 (setq
- doom-font (font-spec :family "Iosevka" :size 15)
- doom-big-font (font-spec :family "Iosevka" :size 18)
+ doom-font (font-spec :family "Mononoki" :size 15)
+ doom-big-font (font-spec :family "Mononoki" :size 18)
  ;; doom-font (font-spec :family "Mononoki" :size 16)
  ;; doom-big-font (font-spec :family "Mononoki" :size 20)
  doom-theme 'doom-dracula
@@ -92,7 +92,8 @@
   (key-chord-define clojure-mode-map "#t" 'cider-test-run-test)
   (key-chord-define clojure-mode-map "üü" 'cider-pprint-eval-last-sexp)
   (rainbow-delimiters-mode 0)
-  (paren-face-mode))
+  (paren-face-mode)
+  (paredit-mode 1))
 
 (add-hook 'clojure-mode-hook 'clj-modes-hooks)
 (add-hook 'clojurec-mode-hook 'clj-modes-hooks)
@@ -167,3 +168,4 @@
 (define-key key-translation-map [dead-diaeresis] "\"")
 (define-key key-translation-map [dead-tilde] "~")
 
+(exec-path-from-shell-initialize)

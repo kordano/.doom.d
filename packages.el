@@ -15,3 +15,4 @@
 (package! prettier-js)
 ;; (package! ac-js2)
 (package! paren-face)
+(package! exec-path-from-shell)
