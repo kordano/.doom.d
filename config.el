@@ -7,13 +7,11 @@
 
 (key-chord-mode 1)
 
-(require 'company)
-
 (setq
- doom-font (font-spec :family "Mononoki" :size 15)
- doom-big-font (font-spec :family "Mononoki" :size 18)
- ;; doom-font (font-spec :family "Mononoki" :size 16)
- ;; doom-big-font (font-spec :family "Mononoki" :size 20)
+ doom-font (font-spec :family "Victor Mono" :size 14)
+ doom-big-font (font-spec :family "Victor Mono" :size 18)
+ ;;doom-font (font-spec :family "Mononoki" :size 15)
+ ;;doom-big-font (font-spec :family "Mononoki" :size 18)
  doom-theme 'doom-dracula
  doom-themes-enable-italic t
  key-chord-two-keys-delay 0.2
@@ -36,9 +34,9 @@
   (setq tide-completion-detailed t
         tide-always-show-documentation t))
 
-(add-hook!
-  js2-mode 'prettier-js-mode
-  (add-hook 'before-save-hook #'refmt-before-save nil t))
+;;(add-hook!
+ ;; js2-mode 'prettier-js-mode
+  ;;(add-hook 'before-save-hook #'refmt-before-save nil t))
 
 
 ;; double key press for exiting insert mode
@@ -68,7 +66,7 @@
   (visual-line-mode 1))
 
 (defun clj-modes-hooks ()
-(define-clojure-indent
+  (define-clojure-indent
     (PUT 2)
     (POST 2)
     (GET 2)
@@ -85,15 +83,17 @@
     (params 'defun)
     (extend-type 'defun))
   (key-chord-define clojure-mode-map ",," 'cider-eval-defun-at-point)
+  (key-chord-define clojure-mode-map ",s" 'cider-send-last-sexp-to-repl)
   (key-chord-define clojure-mode-map "--" 'cider-eval-last-sexp)
   (key-chord-define clojure-mode-map "+ü" 'cider-find-var)
   (key-chord-define clojure-mode-map "#ü" 'cider-eval-buffer)
   (key-chord-define clojure-mode-map "#ä" 'cider-format-defun)
   (key-chord-define clojure-mode-map "#t" 'cider-test-run-test)
   (key-chord-define clojure-mode-map "üü" 'cider-pprint-eval-last-sexp)
-  (rainbow-delimiters-mode 0)
+  (rainbow-delimiters-mode-disable)
   (paren-face-mode)
-  (paredit-mode 1))
+  (paredit-mode 1)
+  (setq cider-repl-pop-to-buffer-on-connect 'display-only))
 
 (add-hook 'clojure-mode-hook 'clj-modes-hooks)
 (add-hook 'clojurec-mode-hook 'clj-modes-hooks)
@@ -120,6 +120,8 @@
 (global-set-key (kbd "C-<left>") 'sp-forward-barf-sexp)
 (global-set-key (kbd "M-s") 'sp-splice-sexp-killing-backward)
 (global-set-key (kbd "<f5>") 'helm-projectile-grep)
+(global-set-key (kbd "<f7>") 'helm-semantic-or-imenu)
+(global-set-key (kbd "<f8>") 'magit-status)
 
  ;; Coloring
 (defun live-fontify-hex-colors (limit)
@@ -169,3 +171,27 @@
 (define-key key-translation-map [dead-tilde] "~")
 
 (exec-path-from-shell-initialize)
+
+ (add-hook 'js-mode-hook 'js2-minor-mode)
+  (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+  (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+
+(add-hook 'cider-repl-mode-hook '(lambda () (setq scroll-conservatively 101)))
+
+;; copied shamelessly from spacemacs
+(require 'cider)
+(defun cider-eval-in-repl-no-focus (form)
+  "Insert FORM in the REPL buffer and eval it."
+  (while (string-match "\\`[ \t\n\r]+\\|[ \t\n\r]+\\'" form)
+    (setq form (replace-match "" t t form)))
+  (with-current-buffer (cider-current-repl-buffer)
+    (let ((pt-max (point-max)))
+      (goto-char pt-max)
+      (insert form)
+      (indent-region pt-max (point))
+      (cider-repl-return))))
+
+(defun cider-send-last-sexp-to-repl ()
+  "Send last sexp to REPL and evaluate it without changing the focus."
+  (interactive)
+  (cider-eval-in-repl-no-focus (cider-last-sexp)))
