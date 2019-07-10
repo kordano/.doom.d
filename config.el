@@ -93,12 +93,15 @@
   (rainbow-delimiters-mode-disable)
   (paren-face-mode)
   (paredit-mode 1)
-  (setq cider-repl-pop-to-buffer-on-connect 'display-only))
+  (setq cider-repl-wrap-history t)
+  (setq cider-save-file-on-load t)
+  (setq cider-overlays-use-font-lock t)
+  (setq cider-repl-pop-to-buffer-on-connect nil))
 
 (add-hook 'clojure-mode-hook 'clj-modes-hooks)
 (add-hook 'clojurec-mode-hook 'clj-modes-hooks)
 (add-hook 'clojurescript-mode-hook 'clj-modes-hooks)
-
+(add-hook 'cider-repl-mode-hook '(lambda () (setq scroll-conservatively 85)))
 
 ;; global shortcuts
 (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
@@ -176,7 +179,6 @@
   (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
   (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
 
-(add-hook 'cider-repl-mode-hook '(lambda () (setq scroll-conservatively 101)))
 
 ;; copied shamelessly from spacemacs
 (require 'cider)
@@ -195,3 +197,5 @@
   "Send last sexp to REPL and evaluate it without changing the focus."
   (interactive)
   (cider-eval-in-repl-no-focus (cider-last-sexp)))
+
+(add-hook 'markdown-mode-hook '(lambda () (setq visual-line-mode t)))
