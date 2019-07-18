@@ -8,8 +8,8 @@
 (key-chord-mode 1)
 
 (setq
- doom-font (font-spec :family "Victor Mono" :size 14)
- doom-big-font (font-spec :family "Victor Mono" :size 18)
+ doom-font (font-spec :family "Victor Mono" :size 26)
+ doom-big-font (font-spec :family "Victor Mono" :size 36)
  ;;doom-font (font-spec :family "Mononoki" :size 15)
  ;;doom-big-font (font-spec :family "Mononoki" :size 18)
  doom-theme 'doom-dracula
@@ -101,6 +101,7 @@
 (add-hook 'clojure-mode-hook 'clj-modes-hooks)
 (add-hook 'clojurec-mode-hook 'clj-modes-hooks)
 (add-hook 'clojurescript-mode-hook 'clj-modes-hooks)
+(add-hook 'cider-mode-hook 'clj-modes-hooks)
 (add-hook 'cider-repl-mode-hook '(lambda () (setq scroll-conservatively 85)))
 
 ;; global shortcuts
@@ -119,6 +120,7 @@
 (global-set-key (kbd "s-y") 'sp-copy-sexp)
 (global-set-key (kbd "s-x") 'sp-kill-sexp)
 (global-set-key (kbd "s-c") 'sp-kill-symbol)
+(global-set-key (kbd "M-l") 'sp-next-sexp)
 (global-set-key (kbd "C-<right>") 'sp-forward-slurp-sexp)
 (global-set-key (kbd "C-<left>") 'sp-forward-barf-sexp)
 (global-set-key (kbd "M-s") 'sp-splice-sexp-killing-backward)
@@ -175,9 +177,9 @@
 
 (exec-path-from-shell-initialize)
 
- (add-hook 'js-mode-hook 'js2-minor-mode)
-  (add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
-  (add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
+(add-hook 'js-mode-hook 'js2-minor-mode)
+(add-to-list 'auto-mode-alist '("\\.jsx?\\'" . js2-jsx-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-jsx-mode))
 
 
 ;; copied shamelessly from spacemacs
@@ -199,3 +201,21 @@
   (cider-eval-in-repl-no-focus (cider-last-sexp)))
 
 (add-hook 'markdown-mode-hook '(lambda () (setq visual-line-mode t)))
+
+
+;; rust
+(defun rust-mode-hooks ()
+  (local-set-key (kbd "C-c <tab>") #'rust-format-buffer)
+  (key-chord-define rust-mode-map ",," 'rustic-cargo-run)
+  (key-chord-define rust-mode-map "--" 'rustic-cargo-build)
+  (key-chord-define rust-mode-map "#ä" 'rustic-cargo-fmt)
+  (key-chord-define rust-mode-map "#ü" 'rustic-cargo-check)
+  (racer-mode)
+  (flycheck-rust-setup))
+
+(setq racer-cmd "~/.cargo/bin/racer") ;; Rustup binaries PATH
+(setq racer-rust-src-path "/home/konrad/src/extern/rust/src") ;; Rust source code PATH
+
+(add-hook 'rust-mode-hook 'rust-mode-hooks)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
