@@ -219,3 +219,8 @@
 (add-hook 'rust-mode-hook 'rust-mode-hooks)
 (add-hook 'racer-mode-hook #'eldoc-mode)
 (add-hook 'racer-mode-hook #'company-mode)
+
+(require 'paren)
+(set-face-background 'show-paren-match "#ffb86c") ;; (face-background 'default)
+(set-face-foreground 'show-paren-match "#282a36")
+(set-face-attribute 'show-paren-match nil :weight 'extra-bold)
