@@ -270,3 +270,7 @@
 (setq centaur-tabs-set-icons t)
 (setq centaur-tabs-gray-out-icons 'buffer)
 (setq centaur-tabs-set-bar 'left)
+
+(global-set-key (kbd "s-<delete>") 'kill-current-buffer)
+
+(global-set-key (kbd "s-<end>") '+workspace/close-window-or-workspace)
