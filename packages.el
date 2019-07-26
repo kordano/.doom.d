@@ -17,3 +17,4 @@
 (package! paren-face)
 (package! exec-path-from-shell)
 (package! kaolin-themes)
+(package! centaur-tabs)
