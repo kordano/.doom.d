@@ -264,5 +264,9 @@
 
 (require 'centaur-tabs)
 (centaur-tabs-mode t)
-(global-set-key (kbd "C-<prior>")  'centaur-tabs-backward)
-(global-set-key (kbd "C-<next>") 'centaur-tabs-forward)
+(global-set-key (kbd "M-<prior>")  'centaur-tabs-backward)
+(global-set-key (kbd "M-<next>") 'centaur-tabs-forward)
+(setq centaur-tabs-style "bar")
+(setq centaur-tabs-set-icons t)
+(setq centaur-tabs-gray-out-icons 'buffer)
+(setq centaur-tabs-set-bar 'left)
