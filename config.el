@@ -272,5 +272,4 @@
 (setq centaur-tabs-set-bar 'left)
 
 (global-set-key (kbd "s-<delete>") 'kill-current-buffer)
-
 (global-set-key (kbd "s-<end>") '+workspace/close-window-or-workspace)
