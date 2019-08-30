@@ -36,7 +36,9 @@
           ("csv" . "clojure.data.csv")
           ("json" . "cheshire.core")
           ("s" . "clojure.spec.alpha")))
-  (visual-line-mode 1))
+  (visual-line-mode 1)
+  (local-set-key (kbd "<M-return>") 'cider-eval-last-sexp))
+
 
 (defun clj-modes-hooks ()
   (define-clojure-indent
@@ -103,8 +105,8 @@
 (global-set-key (kbd "C-<right>") 'sp-forward-slurp-sexp)
 (global-set-key (kbd "C-<left>") 'sp-forward-barf-sexp)
 (global-set-key (kbd "M-s") 'sp-splice-sexp-killing-backward)
-(global-set-key (kbd "<f5>") 'helm-projectile-grep)
-(global-set-key (kbd "<f7>") 'helm-semantic-or-imenu)
+(global-set-key (kbd "<f5>") 'projectile-grep)
+(global-set-key (kbd "<f7>") 'imenu)
 (global-set-key (kbd "<f8>") 'magit-status)
 
 ;; zoombie keys
